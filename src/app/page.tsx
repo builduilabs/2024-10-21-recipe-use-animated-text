@@ -1,9 +1,10 @@
 "use client";
 
 import { useAnimatedText } from "@/app/useAnimatedText";
+import * as RadioGroup from "@radix-ui/react-radio-group";
 import { useAnimatedTextWord } from "@/app/useAnimatedTextWord";
 import { ArrowPathIcon, PauseIcon, PlayIcon } from "@heroicons/react/20/solid";
-import { useEffect, useRef, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 
 let delay = 250;
 let characters = 25;
@@ -46,7 +47,17 @@ export default function Home() {
       <div className="flex shrink-0 items-center justify-between gap-4 bg-gray-700 p-4 shadow-md shadow-black/30">
         <div className="flex gap-2">
           <button
-            className={`inline-flex items-center justify-center gap-1 rounded-full bg-accent p-2.5 font-semibold text-white hover:bg-accent-light`}
+            style={
+              {
+                "--bg-color":
+                  "linear-gradient(rgb(var(--background)), rgb(var(--background)))",
+                "--border-color": `linear-gradient(to bottom,
+                rgb(var(--highlight) / 1) 0%,
+                rgb(var(--background) / 1) 70%)
+              `,
+              } as CSSProperties
+            }
+            className="inline-flex items-center justify-center gap-1 rounded-full border border-transparent bg-accent-light p-2.5 font-semibold text-white [--background:100_121_242] [--highlight:130_147_248] [background:padding-box_var(--bg-color),border-box_var(--border-color)] hover:[--background:130_147_248] hover:[--highlight:192_201_251]"
             onClick={() => setIsPlaying(!isPlaying)}
           >
             {isPlaying ? (
@@ -60,7 +71,7 @@ export default function Home() {
             )}
           </button>
           <button
-            className="inline-flex items-center justify-center gap-1 rounded-full border-accent p-2 font-medium text-gray-300 hover:text-gray-100"
+            className="inline-flex items-center justify-center gap-1 rounded-full border-accent p-2.5 font-medium text-gray-300 hover:text-gray-100"
             onClick={() => {
               setText("");
               setIsPlaying(false);
@@ -72,18 +83,29 @@ export default function Home() {
         </div>
 
         <div className="flex gap-3">
-          <button
-            className={`${delimiter === "character" ? "text-white" : "text-gray-500 hover:text-gray-400"} text-sm font-medium`}
-            onClick={() => setDelimiter("character")}
+          <RadioGroup.Root
+            value={delimiter}
+            onValueChange={setDelimiter}
+            className="flex gap-4"
           >
-            Character
-          </button>
-          <button
-            className={`${delimiter === "word" ? "text-white" : "text-gray-500 hover:text-gray-400"} text-sm font-medium`}
-            onClick={() => setDelimiter("word")}
-          >
-            Word
-          </button>
+            {[
+              { label: "Character", value: "character" },
+              { label: "Word", value: "word" },
+            ].map((option) => (
+              <RadioGroup.Item
+                value={option.value}
+                className="group inline-flex items-center gap-1.5 text-sm font-medium"
+                key={option.value}
+              >
+                <div className="relative size-[15px] rounded-full border border-gray-500 bg-gray-700 group-data-[state=checked]:border-accent-light group-data-[state=checked]:bg-accent">
+                  <RadioGroup.Indicator className="absolute inset-0 flex items-center justify-center">
+                    <div className="size-1.5 rounded-full bg-white" />
+                  </RadioGroup.Indicator>
+                </div>
+                {option.label}
+              </RadioGroup.Item>
+            ))}
+          </RadioGroup.Root>
         </div>
       </div>
     </div>
