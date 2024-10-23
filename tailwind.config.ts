@@ -11,7 +11,7 @@ const config: Config = {
     extend: {
       colors: {
         gray: colors.slate,
-        brand: {
+        accent: {
           DEFAULT: '#6479f2',
           light: '#8293f8',
         },
