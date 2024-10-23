@@ -1,17 +1,20 @@
 "use client";
 
 import { useAnimatedText } from "@/app/useAnimatedText";
+import { useAnimatedTextWord } from "@/app/useAnimatedTextWord";
 import { ArrowPathIcon, PauseIcon, PlayIcon } from "@heroicons/react/20/solid";
 import { useEffect, useRef, useState } from "react";
 
 let delay = 250;
-let characters = 50;
+let characters = 25;
 
 export default function Home() {
   let [isPlaying, setIsPlaying] = useState(false);
   let [text, setText] = useState("");
+  let [delimiter, setDelimiter] = useState<"character" | "word">("character");
 
   let animatedText = useAnimatedText(text);
+  let animatedTextWord = useAnimatedTextWord(text);
 
   useInterval(
     () => {
@@ -33,40 +36,53 @@ export default function Home() {
         <div className="flex w-1/2 flex-col gap-4 pt-4">
           <p className="px-4 text-sm font-semibold text-white">Animated</p>
           <div className="h-0 grow overflow-scroll px-4">
-            <p className="whitespace-pre-wrap text-gray-300">{animatedText}</p>
+            <p className="whitespace-pre-wrap text-gray-300">
+              {delimiter === "character" ? animatedText : animatedTextWord}
+            </p>
           </div>
         </div>
       </div>
 
-      <div className="flex shrink-0 items-center justify-between gap-4 bg-gray-700 p-4">
+      <div className="flex shrink-0 items-center justify-between gap-4 bg-gray-700 p-4 shadow-md shadow-black/30">
         <div className="flex gap-2">
           <button
-            className={`${
-              isPlaying
-                ? "bg-accent text-white hover:bg-accent-light"
-                : "text-gray-l00 bg-gray-600 hover:bg-gray-400/40"
-            } inline-flex w-32 items-center justify-center gap-1 rounded-lg p-2 font-semibold hover:bg-accent-light`}
+            className={`inline-flex items-center justify-center gap-1 rounded-full bg-accent p-2.5 font-semibold text-white hover:bg-accent-light`}
             onClick={() => setIsPlaying(!isPlaying)}
           >
             {isPlaying ? (
               <>
-                <PauseIcon className="size-4" /> Pause
+                <PauseIcon className="size-4" />
               </>
             ) : (
               <>
-                <PlayIcon className="size-4" /> Start
+                <PlayIcon className="size-4" />
               </>
             )}
           </button>
           <button
-            className="text-gray-l00 inline-flex w-32 items-center justify-center gap-1 rounded-lg border-accent bg-gray-600 p-2 font-medium hover:bg-gray-400/40"
+            className="inline-flex items-center justify-center gap-1 rounded-full border-accent p-2 font-medium text-gray-300 hover:text-gray-100"
             onClick={() => {
               setText("");
               setIsPlaying(false);
               position = 0;
             }}
           >
-            <ArrowPathIcon className="size-4" /> Reset
+            <ArrowPathIcon className="size-4" />
+          </button>
+        </div>
+
+        <div className="flex gap-3">
+          <button
+            className={`${delimiter === "character" ? "text-white" : "text-gray-500 hover:text-gray-400"} text-sm font-medium`}
+            onClick={() => setDelimiter("character")}
+          >
+            Character
+          </button>
+          <button
+            className={`${delimiter === "word" ? "text-white" : "text-gray-500 hover:text-gray-400"} text-sm font-medium`}
+            onClick={() => setDelimiter("word")}
+          >
+            Word
           </button>
         </div>
       </div>
