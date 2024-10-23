@@ -12,7 +12,7 @@ let characters = 25;
 export default function Home() {
   let [isPlaying, setIsPlaying] = useState(false);
   let [text, setText] = useState("");
-  let [delimiter, setDelimiter] = useState<"character" | "word">("character");
+  let [delimiter, setDelimiter] = useState("character");
 
   let animatedText = useAnimatedText(text);
   let animatedTextWord = useAnimatedTextWord(text);
@@ -31,13 +31,15 @@ export default function Home() {
         <div className="flex w-1/2 flex-col gap-4 pt-4">
           <p className="px-4 text-sm font-semibold text-white">Original</p>
           <div className="h-0 grow overflow-y-scroll px-4">
-            <p className="whitespace-pre-wrap text-gray-400">{text}</p>
+            <p className="whitespace-pre-wrap text-sm text-gray-400 md:text-base">
+              {text}
+            </p>
           </div>
         </div>
         <div className="flex w-1/2 flex-col gap-4 pt-4">
           <p className="px-4 text-sm font-semibold text-white">Animated</p>
           <div className="h-0 grow overflow-scroll px-4">
-            <p className="whitespace-pre-wrap text-gray-400">
+            <p className="whitespace-pre-wrap text-sm text-gray-400 md:text-base">
               {delimiter === "character" ? animatedText : animatedTextWord}
             </p>
           </div>
