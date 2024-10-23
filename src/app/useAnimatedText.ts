@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { animate } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { animate } from "framer-motion";
+import { useEffect, useState } from "react";
 
-let delimiter = '';
+let delimiter = "";
 export function useAnimatedText(text: string) {
   let [cursor, setCursor] = useState(0);
   let [startingCursor, setStartingCursor] = useState(0);
@@ -16,8 +16,8 @@ export function useAnimatedText(text: string) {
 
   useEffect(() => {
     let controls = animate(startingCursor, text.split(delimiter).length, {
-      duration: 8,
-      ease: 'easeOut',
+      duration: 4,
+      ease: "easeOut",
       onUpdate(latest) {
         setCursor(Math.floor(latest));
       },

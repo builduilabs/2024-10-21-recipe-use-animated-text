@@ -4,7 +4,7 @@ import { useAnimatedText } from "@/app/useAnimatedText";
 import { ArrowPathIcon, PauseIcon, PlayIcon } from "@heroicons/react/20/solid";
 import { useEffect, useRef, useState } from "react";
 
-let delay = 1000;
+let delay = 250;
 let characters = 50;
 
 export default function Home() {
@@ -22,8 +22,23 @@ export default function Home() {
   );
 
   return (
-    <div className="relative flex h-full flex-col bg-gray-800 p-8">
-      <div className="flex shrink-0 items-center justify-between gap-4">
+    <div className="relative flex h-full flex-col">
+      <div className="flex grow divide-x divide-gray-700">
+        <div className="flex w-1/2 flex-col gap-4 pt-4">
+          <p className="px-4 text-sm font-semibold text-white">Original</p>
+          <div className="h-0 grow overflow-y-scroll px-4">
+            <p className="whitespace-pre-wrap text-gray-300">{text}</p>
+          </div>
+        </div>
+        <div className="flex w-1/2 flex-col gap-4 pt-4">
+          <p className="px-4 text-sm font-semibold text-white">Animated</p>
+          <div className="h-0 grow overflow-scroll px-4">
+            <p className="whitespace-pre-wrap text-gray-300">{animatedText}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex shrink-0 items-center justify-between gap-4 bg-gray-700 p-4">
         <div className="flex gap-2">
           <button
             className={`${
@@ -53,23 +68,6 @@ export default function Home() {
           >
             <ArrowPathIcon className="size-4" /> Reset
           </button>
-        </div>
-      </div>
-
-      <div className="mt-6 grid grow grid-cols-2 gap-4">
-        <div className="flex flex-col">
-          <div className="h-0 grow overflow-y-scroll rounded-lg bg-white p-4 shadow">
-            <p className="whitespace-pre-wrap text-gray-900">{text}</p>
-          </div>
-          <p className="mt-4 text-sm font-medium">text</p>
-        </div>
-        <div className="flex flex-col">
-          <div className="h-0 grow overflow-scroll rounded-lg bg-white shadow">
-            <p className="whitespace-pre-wrap p-4 text-gray-900">
-              {animatedText}
-            </p>
-          </div>
-          <p className="mt-4 text-sm font-medium">useAnimatedText(text)</p>
         </div>
       </div>
     </div>
