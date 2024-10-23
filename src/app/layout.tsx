@@ -16,6 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full bg-gray-800">
+      <head>
+        <meta name="color-scheme" content="dark" />
+      </head>
       <body
         className={`${inter.className} relative flex h-full flex-col text-gray-200 antialiased`}
       >
